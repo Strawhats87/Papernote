@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blocco Note per Meeting</title>
+
+    <!-- ================== CSS STYLES ================== -->
+    <style>
+        /* Impostazioni globali e variabili per i colori */
+        :root {
+            --bg-color: #f7f7f7;
+            --sidebar-bg: #e9e9e9;
+            --paper-color: #ffffff;
+            --text-color: #333333;
+            --primary-color: #007bff;
+            --border-color: #dcdcdc;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-editor: 'Courier New', Courier, monospace;
+        }
+
+        /* Reset di base per un aspetto coerente */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Contenitore principale dell'app */
+        .app-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar: la colonna a sinistra con l'elenco delle note */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.25rem;
+        }
+
+        .btn-new-note {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 0.8rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-new-note:hover {
+            background-color: #0056b3;
+        }
+
+        /* Lista delle note */
+        .notes-list {
+            overflow-y: auto; /* Aggiunge la barra di scorrimento se le note sono troppe */
+            flex-grow: 1;
+        }
+
+        .note-list-item {
+            padding: 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .note-list-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Stile per la nota attualmente selezionata */
+        .note-list-item--selected {
+            background-color: #dceaff;
+            font-weight: bold;
+        }
+
+        .note-small-title {
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px; /* Evita che il titolo sia troppo lungo */
+        }
+
+        .btn-delete-note {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #999;
+            visibility: hidden; /* Nascosto di default */
+        }
+        
+        .note-list-item:hover .btn-delete-note {
+            visibility: visible; /* Visibile solo al passaggio del mouse */
+        }
+        .btn-delete-note:hover {
+            color: #d9534f;
+        }
+
+        /* Area principale dove si scrive */
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .note-editor {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            resize: none; /* Disabilita il ridimensionamento */
+            padding: 2rem;
+            font-family: var(--font-editor);
+            font-size: 1rem;
+            line-height: 1.7;
+            background-color: var(--paper-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================== HTML STRUCTURE ================== -->
+    <div class="app-container">
+        <!-- Colonna sinistra per l'elenco delle note -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>I Miei Appunti</h1>
+                <button class="btn-new-note">+</button>
+            </div>
+            <div id="notes-list" class="notes-list">
+                <!-- Le note verranno inserite qui da JavaScript -->
+            </div>
+        </aside>
+
+        <!-- Area principale per la scrittura -->
+        <main class="main-content">
+            <textarea id="note-editor" placeholder="Seleziona una nota o creane una nuova. La prima riga diventerà il titolo."></textarea>
+        </main>
+    </div>
+
+    <!-- ================== JAVASCRIPT LOGIC ================== -->
+    <script>
+        // Selezioniamo gli elementi HTML con cui interagiremo
+        const notesListElement = document.getElementById('notes-list');
+        const noteEditorElement = document.getElementById('note-editor');
+        const newNoteButton = document.querySelector('.btn-new-note');
+
+        let notes = [];
+        let activeNoteId = null;
+
+        // --- Funzioni per gestire i dati (salvataggio, caricamento) ---
+
+        // Carica le note dal localStorage del browser
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('meeting-notes');
+            if (savedNotes) {
+                notes = JSON.parse(savedNotes);
+            }
+            // Carica anche l'ID dell'ultima nota attiva
+            activeNoteId = localStorage.getItem('meeting-notes-active-id');
+        }
+
+        // Salva le note nel localStorage
+        function saveNotes() {
+            localStorage.setItem('meeting-notes', JSON.stringify(notes));
+            localStorage.setItem('meeting-notes-active-id', activeNoteId);
+        }
+        
+        // --- Funzioni per aggiornare l'interfaccia utente ---
+
+        // Mostra la lista delle note nella sidebar
+        function renderNotesList() {
+            notesListElement.innerHTML = ''; // Pulisce la lista attuale
+            
+            // Ordina le note dalla più recente alla più vecchia
+            notes.sort((a, b) => new Date(b.updated) - new Date(a.updated));
+
+            if (notes.length === 0) {
+                notesListElement.innerHTML = '<div style="padding: 1rem; color: #666;">Nessun appunto.</div>';
+                return;
+            }
+
+            notes.forEach(note => {
+                const item = document.createElement('div');
+                item.classList.add('note-list-item');
+                item.dataset.noteId = note.id; // Salva l'ID della nota sull'elemento HTML
+                
+                // Se questa è la nota attiva, aggiungi la classe per evidenziarla
+                if (note.id == activeNoteId) {
+                    item.classList.add('note-list-item--selected');
+                }
+
+                // Estrai la prima riga come titolo
+                const title = note.body.split('\n')[0] || 'Nuovo Appunto';
+
+                item.innerHTML = `
+                    <div class="note-small-title">${title}</div>
+                    <button class="btn-delete-note" data-note-id="${note.id}">×</button>
+                `;
+                notesListElement.appendChild(item);
+            });
+        }
+
+        // Mostra il contenuto della nota attiva nell'editor
+        function renderActiveNote() {
+            if (activeNoteId === null) {
+                noteEditorElement.value = '';
+                noteEditorElement.setAttribute('disabled', 'true'); // Disabilita l'editor se non c'è una nota
+                noteEditorElement.placeholder = "Seleziona una nota o creane una nuova.";
+                return;
+            }
+            
+            noteEditorElement.removeAttribute('disabled');
+            const activeNote = notes.find(note => note.id == activeNoteId);
+            noteEditorElement.value = activeNote ? activeNote.body : '';
+            noteEditorElement.focus();
+        }
+
+        // Funzione completa per aggiornare tutto
+        function refreshUI() {
+            saveNotes();
+            renderNotesList();
+            renderActiveNote();
+        }
+        
+        // --- Gestori di eventi (cosa succede quando l'utente fa qualcosa) ---
+
+        // 1. Click sul pulsante "Nuova Nota"
+        newNoteButton.addEventListener('click', () => {
+            const newNote = {
+                id: Date.now(), // Un ID univoco basato sul timestamp attuale
+                body: '',
+                updated: new Date().toISOString()
+            };
+            notes.push(newNote);
+            activeNoteId = newNote.id;
+            refreshUI();
+        });
+
+        // 2. Click su una nota nella lista o sul bottone di cancellazione
+        notesListElement.addEventListener('click', (event) => {
+            const clickedElement = event.target;
+
+            // Se è stato cliccato il bottone "elimina"
+            if (clickedElement.matches('.btn-delete-note')) {
+                const noteIdToDelete = clickedElement.dataset.noteId;
+                // Chiedi conferma
+                if (confirm("Sei sicuro di voler eliminare questo appunto?")) {
+                    notes = notes.filter(note => note.id != noteIdToDelete);
+                    if (activeNoteId == noteIdToDelete) {
+                        activeNoteId = notes.length > 0 ? notes[0].id : null;
+                    }
+                    refreshUI();
+                }
+            }
+            // Se è stato cliccato un elemento della lista
+            else if (clickedElement.closest('.note-list-item')) {
+                activeNoteId = clickedElement.closest('.note-list-item').dataset.noteId;
+                refreshUI();
+            }
+        });
+
+        // 3. Scrittura nell'editor (salvataggio automatico)
+        noteEditorElement.addEventListener('input', () => {
+            const activeNote = notes.find(note => note.id == activeNoteId);
+            if (activeNote) {
+                activeNote.body = noteEditorElement.value;
+                activeNote.updated = new Date().toISOString();
+                refreshUI();
+            }
+        });
+        
+        // --- Avvio dell'applicazione ---
+        loadNotes();
+        refreshUI();
+
+    </script>
+</body>
+</html>
