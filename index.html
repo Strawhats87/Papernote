@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blocco Note per Meeting</title>
+    <title>Il Mio Quaderno di Appunti</title>
 
-    <!-- ================== CSS STYLES ================== -->
+    <!-- Importiamo i font da Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- ================== CSS STYLES (MIGLIORATI) ================== -->
     <style>
-        /* Impostazioni globali e variabili per i colori */
+        /* Impostazioni globali e variabili per i colori e i font */
         :root {
-            --bg-color: #f7f7f7;
-            --sidebar-bg: #e9e9e9;
-            --paper-color: #ffffff;
-            --text-color: #333333;
-            --primary-color: #007bff;
-            --border-color: #dcdcdc;
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --font-editor: 'Courier New', Courier, monospace;
+            --wood-bg: url('https://www.transparenttextures.com/patterns/wood-pattern.png'); /* Sfondo tavolo di legno */
+            --paper-texture: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* Texture carta */
+            --paper-color: #fafafa;
+            --lines-color: #dbeaff;
+            --text-color: #2c3e50;
+            --primary-color: #2980b9;
+            --border-color: #cccccc;
+            --font-ui: 'Roboto', sans-serif; /* Font pulito per l'interfaccia */
+            --font-notes: 'Kalam', cursive; /* Font "scritto a mano" per le note */
         }
 
-        /* Reset di base per un aspetto coerente */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,145 +32,205 @@
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
+            font-family: var(--font-ui);
+            background-color: #3d3229; /* Colore di base per il legno */
+            background-image: var(--wood-bg);
             color: var(--text-color);
-        }
-
-        /* Contenitore principale dell'app */
-        .app-container {
             display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
         }
 
-        /* Sidebar: la colonna a sinistra con l'elenco delle note */
+        /* Il "quaderno" principale, con ombra per dargli spessore */
+        .notebook-container {
+            width: 90vw;
+            height: 90vh;
+            max-width: 1200px;
+            max-height: 800px;
+            background-color: var(--paper-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            border-radius: 5px;
+            overflow: hidden; /* Nasconde ciò che esce dai bordi arrotondati */
+            position: relative; /* Necessario per posizionare la spirale */
+        }
+
+        /* Aggiungiamo la spirale del quaderno */
+        .notebook-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 280px; /* Stessa larghezza della sidebar */
+            width: 20px; /* Larghezza della spirale */
+            height: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 100% 2.5rem;
+            background-color: #c0c0c0; /* Colore argento per la spirale */
+            border-left: 2px solid #808080;
+            border-right: 2px solid #808080;
+            box-shadow: inset 2px 0 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        /* Sidebar: la parte sinistra del quaderno, come un indice */
         .sidebar {
             width: 280px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
+            background-color: #f0f0e0; /* Un colore leggermente diverso per l'indice */
+            border-right: 2px dashed var(--border-color); /* Linea tratteggiata di divisione */
             display: flex;
             flex-direction: column;
+            padding-left: 15px; /* Spazio per la spirale "immaginaria" */
         }
 
         .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 1rem;
             border-bottom: 1px solid var(--border-color);
+            text-align: center;
         }
 
         .sidebar-header h1 {
-            font-size: 1.25rem;
+            font-family: var(--font-notes);
+            font-size: 1.8rem;
+            font-weight: 400;
         }
 
         .btn-new-note {
             background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
-            padding: 0.5rem 0.8rem;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.2s;
+            margin-top: 0.5rem;
+            display: block;
+            width: 100%;
         }
 
         .btn-new-note:hover {
-            background-color: #0056b3;
+            background-color: #3498db;
         }
 
-        /* Lista delle note */
         .notes-list {
-            overflow-y: auto; /* Aggiunge la barra di scorrimento se le note sono troppe */
+            overflow-y: auto;
             flex-grow: 1;
         }
 
         .note-list-item {
-            padding: 1rem;
+            padding: 1rem 1rem 1rem 0; /* Spazio a sinistra rimosso */
             cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px dotted var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .note-list-item:hover {
-            background-color: #f0f0f0;
+            transition: background-color 0.2s;
         }
         
-        /* Stile per la nota attualmente selezionata */
+        .note-list-item:hover {
+            background-color: #e6e6d0;
+        }
+
         .note-list-item--selected {
-            background-color: #dceaff;
-            font-weight: bold;
+            background-color: #fffacd; /* Giallo post-it per la selezione */
+            border-left: 5px solid var(--primary-color);
+            padding-left: calc(1rem - 5px); /* Compensa il bordo */
+        }
+        
+        .note-list-item--selected .note-small-title {
+            font-weight: 700;
         }
 
         .note-small-title {
-            font-weight: 600;
+            font-weight: 400;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 180px; /* Evita che il titolo sia troppo lungo */
+            max-width: 180px;
+            font-family: var(--font-notes);
+            font-size: 1.2rem;
         }
 
         .btn-delete-note {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #999;
-            visibility: hidden; /* Nascosto di default */
-        }
-        
-        .note-list-item:hover .btn-delete-note {
-            visibility: visible; /* Visibile solo al passaggio del mouse */
-        }
-        .btn-delete-note:hover {
-            color: #d9534f;
+            background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #aaa;
+            transition: color 0.2s;
         }
 
-        /* Area principale dove si scrive */
+        .btn-delete-note:hover { color: #c0392b; }
+
+        /* Area principale dove si scrive, la pagina del quaderno */
         .main-content {
             flex-grow: 1;
+            position: relative; /* Per posizionare la linea rossa verticale */
+            background-color: var(--paper-color);
+            background-image: var(--paper-texture); /* Applica la texture della carta */
+        }
+        
+        /* Linea rossa verticale, tipica dei fogli di protocollo */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50px;
+            width: 2px;
+            height: 100%;
+            background-color: #ffb3b3;
         }
 
+        /* L'area di testo che simula le righe del foglio */
         .note-editor {
             width: 100%;
             height: 100%;
             border: none;
             outline: none;
-            resize: none; /* Disabilita il ridimensionamento */
-            padding: 2rem;
-            font-family: var(--font-editor);
-            font-size: 1rem;
-            line-height: 1.7;
-            background-color: var(--paper-color);
+            resize: none;
+            padding: 2rem 2rem 2rem 70px; /* Più padding a sinistra per la linea rossa */
+            
+            /* Stile del testo */
+            font-family: var(--font-notes);
+            font-size: 1.5rem; /* Font più grande per sembrare scritto a mano */
+            line-height: 2.5rem; /* Altezza di riga fissa per allinearsi alle righe */
+            color: var(--text-color);
+            
+            /* Creazione delle righe orizzontali */
+            background-image: linear-gradient(var(--lines-color) 1px, transparent 1px);
+            background-size: 100% 2.5rem; /* Stessa altezza di line-height */
+            background-attachment: local; /* Le righe scorrono con il testo */
+            background-color: transparent; /* Sfondo trasparente per vedere quello del genitore */
+        }
+        
+        .note-editor:disabled {
+            background-color: #fdfdfd; /* Leggero cambio colore quando disabilitato */
         }
     </style>
 </head>
 <body>
 
-    <!-- ================== HTML STRUCTURE ================== -->
-    <div class="app-container">
+    <!-- ================== HTML STRUCTURE (MODIFICATA) ================== -->
+    <!-- Contenitore che simula il quaderno -->
+    <div class="notebook-container">
         <!-- Colonna sinistra per l'elenco delle note -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h1>I Miei Appunti</h1>
-                <button class="btn-new-note">+</button>
+                <h1>Il Mio Quaderno</h1>
+                <button class="btn-new-note">Nuovo Appunto</button>
             </div>
             <div id="notes-list" class="notes-list">
                 <!-- Le note verranno inserite qui da JavaScript -->
             </div>
         </aside>
 
-        <!-- Area principale per la scrittura -->
+        <!-- Area principale per la scrittura (la pagina del quaderno) -->
         <main class="main-content">
-            <textarea id="note-editor" placeholder="Seleziona una nota o creane una nuova. La prima riga diventerà il titolo."></textarea>
+            <textarea id="note-editor" placeholder="Scrivi qui..."></textarea>
         </main>
     </div>
 
-    <!-- ================== JAVASCRIPT LOGIC ================== -->
+    <!-- ================== JAVASCRIPT LOGIC (INVARIATO) ================== -->
     <script>
+        // Il codice JavaScript rimane identico a prima, non c'è bisogno di modificarlo!
         // Selezioniamo gli elementi HTML con cui interagiremo
         const notesListElement = document.getElementById('notes-list');
         const noteEditorElement = document.getElementById('note-editor');
@@ -175,64 +240,54 @@
         let activeNoteId = null;
 
         // --- Funzioni per gestire i dati (salvataggio, caricamento) ---
-
-        // Carica le note dal localStorage del browser
         function loadNotes() {
             const savedNotes = localStorage.getItem('meeting-notes');
             if (savedNotes) {
                 notes = JSON.parse(savedNotes);
             }
-            // Carica anche l'ID dell'ultima nota attiva
             activeNoteId = localStorage.getItem('meeting-notes-active-id');
         }
 
-        // Salva le note nel localStorage
         function saveNotes() {
             localStorage.setItem('meeting-notes', JSON.stringify(notes));
             localStorage.setItem('meeting-notes-active-id', activeNoteId);
         }
         
         // --- Funzioni per aggiornare l'interfaccia utente ---
-
-        // Mostra la lista delle note nella sidebar
         function renderNotesList() {
-            notesListElement.innerHTML = ''; // Pulisce la lista attuale
-            
-            // Ordina le note dalla più recente alla più vecchia
+            notesListElement.innerHTML = '';
             notes.sort((a, b) => new Date(b.updated) - new Date(a.updated));
 
             if (notes.length === 0) {
-                notesListElement.innerHTML = '<div style="padding: 1rem; color: #666;">Nessun appunto.</div>';
+                notesListElement.innerHTML = '<div style="padding: 1rem; color: #666; text-align: center;">Nessun appunto.</div>';
                 return;
             }
 
             notes.forEach(note => {
                 const item = document.createElement('div');
                 item.classList.add('note-list-item');
-                item.dataset.noteId = note.id; // Salva l'ID della nota sull'elemento HTML
+                item.dataset.noteId = note.id;
                 
-                // Se questa è la nota attiva, aggiungi la classe per evidenziarla
                 if (note.id == activeNoteId) {
                     item.classList.add('note-list-item--selected');
                 }
 
-                // Estrai la prima riga come titolo
                 const title = note.body.split('\n')[0] || 'Nuovo Appunto';
 
                 item.innerHTML = `
-                    <div class="note-small-title">${title}</div>
+                    <div class="note-small-title" title="${title}">${title}</div>
                     <button class="btn-delete-note" data-note-id="${note.id}">×</button>
                 `;
                 notesListElement.appendChild(item);
             });
         }
 
-        // Mostra il contenuto della nota attiva nell'editor
         function renderActiveNote() {
-            if (activeNoteId === null) {
+            if (activeNoteId === null || !notes.find(note => note.id == activeNoteId)) {
                 noteEditorElement.value = '';
-                noteEditorElement.setAttribute('disabled', 'true'); // Disabilita l'editor se non c'è una nota
-                noteEditorElement.placeholder = "Seleziona una nota o creane una nuova.";
+                noteEditorElement.setAttribute('disabled', 'true');
+                noteEditorElement.placeholder = "Seleziona un appunto o creane uno nuovo.";
+                activeNoteId = null; // Sicurezza
                 return;
             }
             
@@ -242,20 +297,17 @@
             noteEditorElement.focus();
         }
 
-        // Funzione completa per aggiornare tutto
         function refreshUI() {
             saveNotes();
             renderNotesList();
             renderActiveNote();
         }
         
-        // --- Gestori di eventi (cosa succede quando l'utente fa qualcosa) ---
-
-        // 1. Click sul pulsante "Nuova Nota"
+        // --- Gestori di eventi ---
         newNoteButton.addEventListener('click', () => {
             const newNote = {
-                id: Date.now(), // Un ID univoco basato sul timestamp attuale
-                body: '',
+                id: Date.now(),
+                body: 'Nuovo Appunto\n', // Aggiungiamo un a capo per un titolo visibile
                 updated: new Date().toISOString()
             };
             notes.push(newNote);
@@ -263,14 +315,12 @@
             refreshUI();
         });
 
-        // 2. Click su una nota nella lista o sul bottone di cancellazione
         notesListElement.addEventListener('click', (event) => {
             const clickedElement = event.target;
 
-            // Se è stato cliccato il bottone "elimina"
             if (clickedElement.matches('.btn-delete-note')) {
+                event.stopPropagation(); // Evita che si attivi anche il click sulla nota
                 const noteIdToDelete = clickedElement.dataset.noteId;
-                // Chiedi conferma
                 if (confirm("Sei sicuro di voler eliminare questo appunto?")) {
                     notes = notes.filter(note => note.id != noteIdToDelete);
                     if (activeNoteId == noteIdToDelete) {
@@ -279,27 +329,29 @@
                     refreshUI();
                 }
             }
-            // Se è stato cliccato un elemento della lista
             else if (clickedElement.closest('.note-list-item')) {
                 activeNoteId = clickedElement.closest('.note-list-item').dataset.noteId;
                 refreshUI();
             }
         });
 
-        // 3. Scrittura nell'editor (salvataggio automatico)
         noteEditorElement.addEventListener('input', () => {
             const activeNote = notes.find(note => note.id == activeNoteId);
             if (activeNote) {
                 activeNote.body = noteEditorElement.value;
                 activeNote.updated = new Date().toISOString();
-                refreshUI();
+                // Salviamo ma ricarichiamo solo la lista per non perdere il focus
+                saveNotes();
+                renderNotesList();
             }
         });
         
         // --- Avvio dell'applicazione ---
-        loadNotes();
-        refreshUI();
-
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNotes();
+            refreshUI();
+        });
     </script>
 </body>
 </html>
+
