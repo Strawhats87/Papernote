@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promunel® for UTI Prevention: Feasibility Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        header {
+            background-color: #005A9C; /* Professional Blue */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #e9ecef;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+        nav button {
+            background-color: #007BFF; /* Brighter Blue for buttons */
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            flex-grow: 1;
+            min-width: 150px; /* Ensure buttons don't get too small */
+        }
+        nav button:hover, nav button.active {
+            background-color: #0056b3; /* Darker Blue */
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            animation: fadeIn 0.5s;
+            border-radius: 0 0 8px 8px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .section-title {
+            color: #005A9C;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        .sub-section-title {
+            color: #007BFF;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .highlight {
+            background-color: #e7f3ff;
+            padding: 10px;
+            border-left: 4px solid #007BFF;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .note {
+            font-style: italic;
+            color: #555;
+            font-size: 0.9em;
+        }
+        .citation {
+            font-size: 0.7em;
+            vertical-align: super;
+            color: #007bff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 0.9em;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+            nav button {
+                width: 100%;
+                margin: 5px 0;
+            }
+            header h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Promunel® for UTI Prevention: Feasibility Dashboard</h1>
+        </header>
+
+        <nav>
+            <button class="tab-button active" onclick="openTab(event, 'summary')">Executive Summary</button>
+            <button class="tab-button" onclick="openTab(event, 'profile')">Promunel® Profile</button>
+            <button class="tab-button" onclick="openTab(event, 'science')">Scientific Rationale</button>
+            <button class="tab-button" onclick="openTab(event, 'market')">Market & Competition</button>
+            <button class="tab-button" onclick="openTab(event, 'regulatory')">Regulatory & Clinical</button>
+            <button class="tab-button" onclick="openTab(event, 'strategy')">Strategic Recommendations</button>
+        </nav>
+
+        <!-- Tab Content -->
+        <div id="summary" class="tab-content active">
+            <h2 class="section-title">Executive Summary</h2>
+            <div class="highlight">
+                Promunel®, a polyphenol-rich propolis extract, presents an innovative opportunity in the UTI support market by addressing unmet needs in recurrent UTI management.
+            </div>
+            <p class="sub-section-title">Opportunity:</p>
+            <ul>
+                <li>UTIs are widespread: ~150 million globally/year<span class="citation">1</span>, ~8M US doctor visits, approx. 50% of women experience a UTI in their lifetime<span class="citation">2</span>.</li>
+                <li>Recurrent UTIs (rUTIs) are common (~30% of women)<span class="citation">3</span>, driving antibiotic use and resistance.</li>
+                <li>Strong demand for preventive solutions to break the "antibiotic cycle".</li>
+            </ul>
+
+            <p class="sub-section-title">Promunel® Introduction:</p>
+            <ul>
+                <li>Polyphenol-rich propolis extract via patented M.E.D.™ (Multi Dynamic Extraction) process.</li>
+                <li>Leverages propolis' antimicrobial and immunomodulatory properties in a standardized, clinically tested form.</li>
+                <li>Shown efficacy in respiratory/immune health (29% fewer infections in RCT)<span class="citation">4</span>.</li>
+            </ul>
+
+            <p class="sub-section-title">Key Drivers for Uro-Immunology Expansion:</p>
+            <ul>
+                <li><strong>Mechanistic Differentiation:</strong> Dual action (antimicrobial + immune modulation<span class="citation">5</span>) unlike single-mechanism cranberry.</li>
+                <li><strong>Clinical & Scientific Backing:</strong> Emerging research on propolis for inflammation<span class="citation">6</span>, anti-adhesion/anti-biofilm<span class="citation">7,8</span>, and immune modulation (M1-M2 shift)<span class="citation">5</span>.</li>
+                <li><strong>Market Gap:</strong> €XXXM UTI supplement market dominated by cranberry/D-mannose, facing innovation fatigue and inconsistent efficacy (many lack sufficient PAC dose ≥36 mg/day<span class="citation">9</span>).</li>
+                <li><strong>Regulatory Outlook:</strong> Positionable with allowable claims (e.g., "supports immune defense" with vitamin addition) and strong clinical storytelling, despite EFSA's historical rejection of specific UTI claims for cranberry<span class="citation">10</span>.</li>
+            </ul>
+
+            <p class="sub-section-title">Investment Rationale:</p>
+            <ul>
+                <li>Expand into uro-genital health, addressing unmet rUTI needs.</li>
+                <li>Strategy: Conduct focused rUTI clinical trial, develop "bladder immunity" branding, target key EU markets (Italy, France, Germany, Spain).</li>
+            </ul>
+        </div>
+
+        <div id="profile" class="tab-content">
+            <h2 class="section-title">Promunel® Profile</h2>
+            <div class="highlight">
+                Promunel® is a standardized, patented propolis extract offering a unique dual-action approach for immune support, now being explored for uro-immunology.
+            </div>
+            <p class="sub-section-title">What is Promunel®?</p>
+            <ul>
+                <li>A polyphenol-rich propolis extract. Propolis is a resinous beehive product rich in flavonoids and phenolic acids.</li>
+                <li>Produced via the patented M.E.D.™ (Multi Dynamic Extraction) process, ensuring standardization and overcoming batch variability common in raw propolis<span class="citation">17,18</span>.</li>
+                <li>Contains a diverse profile of ~300 polyphenols<span class="citation">11,48</span> including galangin, quercetin, chrysin, apigenin, pinocembrin, pinobanksin<span class="citation">21</span>.</li>
+            </ul>
+
+            <p class="sub-section-title">Core Actions & Mechanisms:</p>
+            <ul>
+                <li><strong>Dual Action:</strong>
+                    <ol>
+                        <li>Broad-spectrum Polyphenol Antimicrobial Effects.</li>
+                        <li>Immune Modulation (e.g., macrophage polarization).</li>
+                    </ol>
+                </li>
+                <li>This dual action potentially reduces infection recurrence and inflammation-driven symptoms.</li>
+            </ul>
+
+            <p class="sub-section-title">Key Differentiators & USPs:</p>
+            <ul>
+                <li><strong>Macrophage Polarization:</strong> FYTEXIA's patent (FR3154315) supports Promunel®'s ability to modulate innate immunity by shifting macrophages from pro-inflammatory M1 to anti-inflammatory M2 state<span class="citation">5,14,15</span>. This is highly relevant for bladder mucosa health.</li>
+                <li><strong>Standardization:</strong> M.E.D.™ process ensures consistent polyphenol profile and efficacy<span class="citation">19</span>.</li>
+                <li><strong>Broad-Spectrum Effects:</strong> Unlike single-target cranberry or D-mannose.</li>
+                <li><strong>Goes Beyond Cranberry:</strong> Offers a new, science-driven alternative in a market seeking innovation.</li>
+            </ul>
+
+            <p class="sub-section-title">Proven Efficacy (Respiratory Health):</p>
+            <ul>
+                <li>Demonstrated a 29% reduction in respiratory infections (colds vs placebo) in a recent RCT<span class="citation">4,31</span>.</li>
+                <li>Indicates a broad immune-support role, extendable to uro-immunology.</li>
+                <li>Analogous to OM-85 (Broncho-Vaxom) for respiratory immunity, hinting at propolis as a natural "immunostimulant" across mucosal sites.</li>
+            </ul>
+        </div>
+
+        <div id="science" class="tab-content">
+            <h2 class="section-title">Scientific Rationale for UTI Prevention</h2>
+            <div class="highlight">
+                Promunel®'s multi-faceted actions target both the pathogen ("the bug") and the host's defenses, setting it apart from conventional UTI supplements.
+            </div>
+
+            <p class="sub-section-title">1. Immune Modulation:</p>
+            <ul>
+                <li>Promotes anti-inflammatory macrophage phenotype (M1 to M2 shift)<span class="citation">5,14,15</span>.</li>
+                <li>Regulates cytokines (e.g., lowers TNF-α via miR-19a-3p, miR-203a-3p upregulation)<span class="citation">6,13</span>.</li>
+                <li>May reduce chronic inflammatory milieu post-rUTIs, alleviate symptoms, and improve bacterial clearance.</li>
+                <li>Addresses underlying immune deficits and microbiota disturbances often seen in rUTI-prone women<span class="citation">16</span>.</li>
+            </ul>
+
+            <p class="sub-section-title">2. Anti-Adhesion & Anti-Biofilm:</p>
+            <ul>
+                <li>Propolis polyphenols (flavonoids like galangin, quercetin etc.<span class="citation">21</span>) may inhibit biofilm formation and motility of uropathogens<span class="citation">20</span>.</li>
+                <li>Crucial as UPEC often forms biofilms, evading antibiotics.</li>
+                <li>Propolis can potentiate cranberry's anti-adhesion effect against UPEC, amplifying effects on motility and biofilm genes<span class="citation">7,8</span>.</li>
+                <li>Suggests propolis flavonoids may inhibit bacterial quorum-sensing or virulence pathways.</li>
+            </ul>
+
+            <p class="sub-section-title">3. Direct Antimicrobial Action:</p>
+            <ul>
+                <li>Exhibits bacteriostatic/bactericidal effects against various microbes<span class="citation">11</span>.</li>
+                <li>M.E.D.™ propolis is effective against drug-resistant strains<span class="citation">19</span>, valuable for rUTI patients with multi-drug resistant E. coli.</li>
+                <li>Gentler than antibiotics, potentially suppressing pathogen load without disrupting beneficial flora (needs urinary context study).</li>
+            </ul>
+
+            <p class="sub-section-title">4. Antioxidant & Tissue Protective:</p>
+            <ul>
+                <li>rUTIs cause oxidative stress in bladder tissue.</li>
+                <li>Propolis polyphenols are potent antioxidants.</li>
+                <li>Reported upregulation of NRF2-related antioxidant responses<span class="citation">11,22</span>.</li>
+                <li>May protect urothelial cells, maintain mucosal barrier integrity, and reduce hypersensitivity.</li>
+            </ul>
+
+            <p class="sub-section-title">Overall Mechanistic Rationale:</p>
+            <p class="note">Promunel® addresses both sides of the UTI equation:
+                <br>- <strong>The Bug:</strong> Lowers virulence (anti-adhesion, anti-biofilm, direct antimicrobial).
+                <br>- <strong>The Host:</strong> Boosts defensive capacity (immune modulation, antioxidant, tissue protection).
+                <br>This polyphenol-driven antimicrobial action + immune modulation is the cornerstone of its UTI application<span class="citation">5</span>.
+            </p>
+        </div>
+
+        <div id="market" class="tab-content">
+            <h2 class="section-title">Market Landscape & Competition</h2>
+            <div class="highlight">
+                The UTI supplement market is ripe for innovation, with consumer fatigue towards existing cranberry and D-mannose options. Promunel® can fill this gap.
+            </div>
+
+            <p class="sub-section-title">Market Overview:</p>
+            <ul>
+                <li>Size: €XXX Million (notional value for UTI supplements).</li>
+                <li>Dominated by: Cranberry Proanthocyanidins (PACs) and D-Mannose products.</li>
+                <li>Challenges with Current Options:
+                    <ul>
+                        <li><strong>Innovation fatigue:</strong> Limited new mechanisms.</li>
+                        <li><strong>Inconsistent efficacy:</strong> Many cranberry products lack sufficient active PAC dose (≥36 mg/day required<span class="citation">9</span>). D-mannose effectiveness debated (e.g., Hayward et al., Lancet 2023 found no significant benefit over placebo for rUTIs).</li>
+                        <li><strong>D-mannose limitations:</strong> Only blocks certain E. coli strains (Type-1 fimbriated), not P-fimbriated<span class="citation">27</span>. Cranberry PACs inhibit both<span class="citation">27</span>.</li>
+                    </ul>
+                </li>
+                <li>Opportunity for science-driven, multi-mechanism alternatives like Promunel®.</li>
+            </ul>
+
+            <p class="sub-section-title">Key Competitor Benchmarking:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product (Brand)</th>
+                        <th>Key Ingredients & Dosage</th>
+                        <th>Positioning / Claims</th>
+                        <th>Promunel® Differentiation Point</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ellura® (Pharmatoka/Solv)</td>
+                        <td>Cranberry extract (36mg PAC/cap)</td>
+                        <td>"Medical-grade" cranberry, anti-adhesion, urologist recommended.</td>
+                        <td>Beyond PAC anti-adhesion; adds immune modulation.</td>
+                    </tr>
+                    <tr>
+                        <td>CranActin® (Solaray)</td>
+                        <td>Cranberry extract (PAC varies) + Vit C</td>
+                        <td>Retail food supplement, "natural remedy", "award-winning formula".</td>
+                        <td>Standardized active, stronger science, dual action.</td>
+                    </tr>
+                    <tr>
+                        <td>Cys-Control® (Arkopharma)</td>
+                        <td>Cranberry (36mg PAC) + Heather + D-Mannose (Fort version 2g/day)</td>
+                        <td>Phytotherapy brand, combo approach, "urinary comfort".</td>
+                        <td>Single ingredient with multi-faceted benefits vs. complex combo. Unique immune angle.</td>
+                    </tr>
+                    <tr>
+                        <td>Utipro® Plus (Novintethical)</td>
+                        <td>Xyloglucan & Gelose + Propolis & Hibiscus (Medical Device)</td>
+                        <td>Novel mechanism (gut barrier), prevents bacterial translocation.</td>
+                        <td>Focus on bladder-level immunity & direct uro-pathogen effects vs. gut-centric. Clearer supplement positioning.</td>
+                    </tr>
+                    <tr>
+                        <td>D-Mannose (Generic/Brands)</td>
+                        <td>D-Mannose (typically 1-2g/dose)</td>
+                        <td>Rising star, "flushes bacteria", natural sugar.</td>
+                        <td>Broader spectrum activity, immune support, addresses host factors not just bacterial binding.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="note">Analysis: 36mg PAC is de facto standard. Market shows signs of cranberry fatigue and limited claims. Promunel® can own the "immune component" space.</p>
+
+            <p class="sub-section-title">Promunel's Competitive Edge:</p>
+            <ul>
+                <li><strong>New Core Active:</strong> Propolis polyphenols offer a fresh story beyond cranberry.</li>
+                <li><strong>Unique Dual-Action:</strong> Immune + Antimicrobial.</li>
+                <li><strong>Quality & Standardization:</strong> Like Ellura's PAC focus, but with broader action.</li>
+                <li><strong>Simplified Potency:</strong> Potential for one Promunel® capsule to offer benefits of multiple combined ingredients.</li>
+                <li>Can capture premium niche as "next evolution UTI supplement."</li>
+            </ul>
+        </div>
+
+        <div id="regulatory" class="tab-content">
+            <h2 class="section-title">Regulatory Outlook & Clinical Trial Concept</h2>
+            <div class="highlight">
+                While direct UTI prevention claims are challenging in the EU, Promunel® can leverage general health and immune support claims, bolstered by a strong clinical trial.
+            </div>
+
+            <p class="sub-section-title">EU Regulatory Landscape (EFSA Health Claims):</p>
+            <ul>
+                <li>No Article 13.1 generic claim for "urinary tract health" authorized.</li>
+                <li>Past Article 13.5 applications for UTI-related claims (e.g., cranberry PACs "defence against pathogens") rejected due to insufficient cause-effect evidence<span class="citation">10</span>.
+                    <ul><li>E.g., Pacran® review (2025 EFSA) acknowledged physiological effect (adhesion inhibition) but no definitive UTI risk reduction<span class="citation">10,23</span>.</li></ul>
+                </li>
+                <li>Direct prevention/recurrence claims are considered disease-risk reduction, requiring pharmaceutical-level evidence.</li>
+                <li><strong>Nuance:</strong> National traditions/on-hold botanical claims. France approved "36mg PAC cranberry can help reduce adhesion of E. coli"<span class="citation">24</span> (not EU-wide). Some traditional herbal medicinal products (e.g., Ellura for cystitis recurrence<span class="citation">25</span>) exist.</li>
+            </ul>
+             <p class="sub-section-title">Promunel® Regulatory Strategy:</p>
+            <ul>
+                <li>Position as a food supplement.</li>
+                <li>Utilize general health claims (e.g., "contributes to normal function of the immune system" if combined with Vitamin C/D/Zinc).</li>
+                <li>Use structure-function phrasing (e.g., "supports urinary tract health," "helps maintain bladder comfort") in marketing (with scientific context, no explicit disease prevention).</li>
+                <li>Leverage "on-hold" botanical claims for propolis (e.g., "natural defenses") where applicable per country.</li>
+            </ul>
+
+
+            <p class="sub-section-title">Clinical Trial Concept for rUTI Prevention:</p>
+            <ul>
+                <li><strong>Objective:</strong> Substantiate efficacy in preventing UTIs and support marketing claims.</li>
+                <li><strong>Target Population:</strong> Adult women (18-70 yrs) with recurrent UTIs (≥3 UTIs in past 12 months or ≥2 in last 6 months<span class="citation">49</span>).</li>
+                <li><strong>Study Design:</strong> Randomized, double-blind, controlled trial (parallel groups), multicenter in Europe.
+                    <ul>
+                        <li>Arm A: Promunel® supplement (48 mg/day propolis polyphenols).</li>
+                        <li>Arm B: Comparator - leading cranberry extract (e.g., 36 mg PAC/day, like Ellura).</li>
+                        <li>(Optional Arm C: Placebo - ethically challenging but strengthens claims).</li>
+                    </ul>
+                </li>
+                <li><strong>Dosage & Administration:</strong> E.g., 2 capsules of 100mg Promunel® extract daily. Comparator: 1 cap daily.</li>
+                <li><strong>Study Duration:</strong> 6 months supplementation, follow-up to 9-12 months.</li>
+                <li><strong>Primary Endpoints:</strong>
+                    <ol>
+                        <li>UTI Recurrence Rate (symptomatic, culture-confirmed UTIs per person-year).</li>
+                        <li>Time to First UTI (Kaplan-Meier).</li>
+                        <li>Symptom Severity/Frequency (validated questionnaire).</li>
+                    </ol>
+                </li>
+                <li><strong>Secondary Endpoints:</strong> Inflammation/Immune Markers (CRP, urinary IL-6, IL-8), Antibiotic Use, Microbiological changes (vaginal/urinary flora), Quality of Life (QoL).</li>
+                <li><strong>Estimated Sample Size:</strong> ~100-150 participants per arm (total ~250-300).</li>
+                <li><strong>Estimated Cost:</strong> €250k-€500k (pilot ~€100k).</li>
+                <li><strong>Impact:</strong> Non-inferiority or superiority to cranberry would be landmark. Data for publications, marketing, potential EFSA/national claims. "Propolis vs Cranberry head-to-head."</li>
+            </ul>
+        </div>
+
+        <div id="strategy" class="tab-content">
+            <h2 class="section-title">Strategic Recommendations for FYTEXIA</h2>
+            <div class="highlight">
+                FYTEXIA can position Promunel® as a "Uro-Immunology Innovator," building a brand narrative around immunity, microbiota, and urinary health.
+            </div>
+
+            <p class="sub-section-title">1. Position Promunel® as a Uro-Immunology Innovator:</p>
+            <ul>
+                <li><strong>Brand Storytelling:</strong> Connect immunity, microbiota, and urinary health. Educate that rUTIs are about host susceptibility, not just bacteria. "Promunel® bolsters the body's natural defenses in the bladder."</li>
+                <li><strong>Link to Health Trends:</strong> Consumers understand "immunity" (post-COVID) and probiotics/microbiome.</li>
+                <li><strong>Differentiation from Cranberry:</strong> "While cranberry PACs mainly address bacteria, Promunel® works on you – calming inflammation and enhancing your natural protection." Metaphor: Cranberry = slippery surface; Promunel® = fortifying bladder walls & training immune cells.</li>
+            </ul>
+
+            <p class="sub-section-title">2. Product Development & Portfolio Strategy:</p>
+            <ul>
+                <li><strong>Standalone Promunel® Supplement:</strong> ~48mg polyphenols/day. Add Vit C/Zinc for legal immune claims ("bladder immune defense" supplement). Packaging: "with Promunel® propolis extract – rich in polyphenols for immune and urinary health."</li>
+                <li><strong>Combination Formulas:</strong>
+                    <ul>
+                        <li>Promunel® + Cranberry: "Now with Propolis for 2x action."</li>
+                        <li>Promunel® + D-Mannose: Covers adhesion, biofilm, immune support.</li>
+                        <li>(Caution: Too many actives complicate regulatory approval).</li>
+                    </ul>
+                </li>
+                <li><strong>Dosage Form Innovation:</strong> Gummies, effervescent granules (ensure polyphenol stability).</li>
+                <li><strong>Safety & Compliance:</strong> Proactively address allergy warnings (bee products). Maintain food supplement status.</li>
+            </ul>
+
+            <p class="sub-section-title">3. Go-to-Market Roadmap (Focus: Italy, France, Germany, Spain):</p>
+            <ul>
+                <li><strong>Italy:</strong> Strategic first market. Familiar with propolis & UTI supplements. Allows pending botanical claims. Target urologists, gynecologists, pharmacies.</li>
+                <li><strong>France:</strong> Stringent claims, but sophisticated consumers. Propolis known for immunity. Focus on standard supplement claims (add Vit C/Zinc). Leverage French patent (FR3154315).</li>
+                <li><strong>Germany:</strong> Keen on evidence. Apotheke-endorsed. Scrutinized claims; rely on vitamin-added general function or "Bladder comfort." Highlight standardization/clinical trial.</li>
+                <li><strong>Spain:</strong> Sizable market. Cost-sensitive. Focus on antibiotic resistance reduction.</li>
+                <li><strong>Key Messaging (Core):</strong> "Clinically proven in immune health; now applied to urinary health." "Works from within: helps your body resist UTIs." "Beyond cranberry: tackling UTIs by boosting immunity and fighting bacteria's defenses."</li>
+            </ul>
+
+            <p class="sub-section-title">4. Medical and Marketing Outreach:</p>
+            <ul>
+                <li><strong>KOL Endorsements:</strong> Identify urologists/gynecologists in target countries.</li>
+                <li><strong>Publications & Conferences:</strong> Peer-reviewed journal (e.g., Journal of Urology, Nutrients). Present at EAU congress, Nutrition/Functional Medicine conferences.</li>
+                <li><strong>Consumer Education & Digital:</strong> "Bladder Immunity" or "The Immune Link to UTIs" content campaign. SEO for "prevent UTI naturally." Testimonials.</li>
+                <li><strong>Alliances:</strong> Partner with known women's health brands or probiotic companies.</li>
+                <li><strong>Timeline for Launch:</strong> If trial planned 2025, results early 2026 -> market launch late 2026. Interim soft-launch possible.</li>
+            </ul>
+
+            <p class="sub-section-title">5. Long-Term Vision:</p>
+            <ul>
+                <li><strong>Position FYTEXIA as a leader in Uro-Immunology</strong> (coin the term).</li>
+                <li><strong>Portfolio Development:</strong> E.g., Promunel® + Oxxynea® (antioxidant), or with AB-Biotics probiotic.</li>
+                <li><strong>Market Expansion:</strong> Post-EU success, target North America (less claim-restricted for supplements) and Asia (propolis popular).</li>
+            </ul>
+            <p class="note">Conclusion: Promunel® has a promising clinical/commercial trajectory. Strategic storytelling around immune resilience, bladder health, and microbiota balance can fill a genuine market gap.</p>
+        </div>
+
+        <footer>
+            <p>This dashboard summarizes key findings from "Promunel® for UTI Prevention: Clinical and Commercial Feasibility Analysis".<br>All referenced citations (e.g., <span class="citation">1</span>, <span class="citation">2</span>) correspond to sources in the original document.</p>
+        </footer>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Initialize the first tab
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelector('.tab-button.active').click();
+        });
+    </script>
+</body>
+</html>
